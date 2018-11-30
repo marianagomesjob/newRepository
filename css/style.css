@@ -1,0 +1,17 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
+.card{
+	
+	border-radius: 2px;
+	-webkit-box-shadow: 1px -1px 19px 3px rgba(168,163,168,0.7);
+	-moz-box-shadow: 1px -1px 19px 3px rgba(168,163,168,0.7);
+	box-shadow: 1px -1px 19px 3px rgba(168,163,168,0.7);
+	padding: 0.25rem;
+ 	width: 100%;
+	max-width: 800px;
+	margin: 0 auto;  
+	
+}	
+
+

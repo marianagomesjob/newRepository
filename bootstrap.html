@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <!-- Meta tags Obrigatórias -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+    <script src="jquery-1.12.4.min.js" type="text/javascript"></script>    
+    <script src="jquery-ui-1.11.2.js" type="text/javascript"></script>
+	<title>Olá, mundo!</title>
+	
+    <script>
+        function verificarCPF(strCpf) {
+            if (!/[0-9]{11}/.test(strCpf)) return false;
+            if (strCpf === "00000000000") return false;
+
+            var soma = 0;
+
+            for (var i = 1; i <= 9; i++) {
+                soma += parseInt(strCpf.substring(i - 1, i)) * (11 - i);
+            }
+
+            var resto = soma % 11;
+
+            if (resto === 10 || resto === 11 || resto < 2) {
+                resto = 0;
+            } else {
+                resto = 11 - resto;
+            }
+
+            if (resto !== parseInt(strCpf.substring(9, 10))) {
+                return false;
+            }
+
+            soma = 0;
+
+            for (var i = 1; i <= 10; i++) {
+                soma += parseInt(strCpf.substring(i - 1, i)) * (12 - i);
+            }
+            resto = soma % 11;
+
+            if (resto === 10 || resto === 11 || resto < 2) {
+                resto = 0;
+            } else {
+                resto = 11 - resto;
+            }
+
+            if (resto !== parseInt(strCpf.substring(10, 11))) {
+                return false;
+            }
+
+            return true;
+        }
+
+        function metodoGET(strLink){
+                var data = "NADA AQUI!";
+                // Exemplo de requisição GET
+                var ajax = new XMLHttpRequest();
+                // Seta tipo de requisição e URL com os parâmetros
+                ajax.open("GET", strLink, true);
+                // Envia a requisição
+                ajax.send();
+                // Cria um evento para receber o retorno.
+                ajax.onreadystatechange = function() 
+                {
+                // Caso o state seja 4 e o http.status for 200, é porque a requisiçõe deu certo.
+                if (ajax.readyState == 4 && ajax.status == 200) 
+                    {
+                        data = ajax.responseText;
+                        console.log(data);
+                    }
+                    else
+                    {
+                    data = ajax.status;
+                    console.log(data);
+                    }
+                }
+                alert("RECEBIDO!")
+                return
+        }
+
+        function validarNome(strNome) {
+            var strCpf = document.getElementById('cpf').value;
+            var strNome = document.getElementById('nome').value;
+            if(strNome != "" && strCpf != ""){
+                metodoGET("https://bigboost.bigdatacorp.com.br/peoplev2?Datasets=basic_data,"+
+                "emails,phones&q=name%7B" + strNome +"%7D,doc%7B" + strCpf + "%7D&AccessToken=61d50b1c-0e2c-4ae3-a658-32d10996a579")
+            }
+            else if(strCpf != ""){
+                metodoGET("https://bigboost.bigdatacorp.com.br/peoplev2?Datasets=basic_data,%22+%20%22emails,"+
+                "phones&q=%7D,doc%7B"+strCpf+"%7D&AccessToken=61d50b1c-0e2c-4ae3-a658-32d10996a579")
+            }
+            else if(strNome != ""){
+                metodoGET("https://bigboost.bigdatacorp.com.br/peoplev2?Datasets=basic_data,%22+%20%22emails,"+
+                "phones&q=name%7B" + strNome +"%7D,%7D&AccessToken=61d50b1c-0e2c-4ae3-a658-32d10996a579")
+            }
+            
+            return;
+            document.getElementById('frm').submit();
+        }
+
+
+    </script>
+	<!--JS-->
+	<!-- <script src="mascara.min.js"></script> -->
+	<!-- <script src="main.js"></script> -->
+
+  </head>
+  <body>
+  
+	
+
+    <div class="container-fluid" id="app">
+		<BR>
+		
+		<div class="card">
+			<div class="card-body">
+				<div class="container">
+			<form>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Nome</label>
+					<input type="text" class="form-control" id="nome" aria-describedby="emailHelp"  placeholder="Insira seu nome">
+                </div>
+                
+				<div class="form-group">
+					<label for="exampleInputPassword1">CPF</label>
+					<input class="form-control" type="text" title="Digite aqui seu CFP, são apenas 11 números"  id="cpf" placeholder="###.###.###-##" maxlength="14">
+				</div>
+		
+				<button type="submit" class="btn btn-primary mb-2"id="btn1" onclick='javascript:validarNome()'>Enviar</button>
+				
+			
+						
+			</form> 
+		
+		
+			<br>
+		
+				<table class="table">
+				  <thead class="thead-light">
+					<tr>
+					  <th scope="col">Nome</th>
+					  <th scope="col">CPF</th>
+					  <th scope="col"></th>
+
+					</tr>
+				  </thead>
+				  <tbody>
+					<tr v-for="user in user">
+					  <th scope="row">@{{name}}</th>
+					  <td>@{{doc}}</td>
+					  <td>Salvar</td>
+					</tr>
+
+				  </tbody>
+				</table>
+		</div>
+			</div>
+		</div>
+	
+		<br>
+		
+
+
+    </div>
+
+
+    <!-- JavaScript (Opcional) -->
+    <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
