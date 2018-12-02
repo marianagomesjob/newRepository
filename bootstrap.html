@@ -9,54 +9,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
-    <script src="jquery-1.12.4.min.js" type="text/javascript"></script>    
-    <script src="jquery-ui-1.11.2.js" type="text/javascript"></script>
+    <script src="js/jquery-1.12.4.min.js" type="text/javascript"></script>    
+    <script src="js/jquery-ui-1.11.2.js" type="text/javascript"></script>
 	<title>Olá, mundo!</title>
 	
     <script>
-        function verificarCPF(strCpf) {
-            if (!/[0-9]{11}/.test(strCpf)) return false;
-            if (strCpf === "00000000000") return false;
 
-            var soma = 0;
-
-            for (var i = 1; i <= 9; i++) {
-                soma += parseInt(strCpf.substring(i - 1, i)) * (11 - i);
-            }
-
-            var resto = soma % 11;
-
-            if (resto === 10 || resto === 11 || resto < 2) {
-                resto = 0;
-            } else {
-                resto = 11 - resto;
-            }
-
-            if (resto !== parseInt(strCpf.substring(9, 10))) {
-                return false;
-            }
-
-            soma = 0;
-
-            for (var i = 1; i <= 10; i++) {
-                soma += parseInt(strCpf.substring(i - 1, i)) * (12 - i);
-            }
-            resto = soma % 11;
-
-            if (resto === 10 || resto === 11 || resto < 2) {
-                resto = 0;
-            } else {
-                resto = 11 - resto;
-            }
-
-            if (resto !== parseInt(strCpf.substring(10, 11))) {
-                return false;
-            }
-
-            return true;
-        }
-
-        function metodoGET(strLink){
+		function metodoGET(strLink){
                 var data = "NADA AQUI!";
                 // Exemplo de requisição GET
                 var ajax = new XMLHttpRequest();
@@ -71,12 +30,14 @@
                 if (ajax.readyState == 4 && ajax.status == 200) 
                     {
                         data = ajax.responseText;
-                        console.log(data);
+                        //console.log(data);
+						return (data);
                     }
                     else
                     {
-                    data = ajax.status;
-                    console.log(data);
+						data = ajax.status;
+						//console.log(data);
+					return (data);
                     }
                 }
                 alert("RECEBIDO!")
@@ -150,12 +111,9 @@
 					</tr>
 				  </thead>
 				  <tbody>
-					<tr v-for="user in user">
-					  <th scope="row">@{{name}}</th>
-					  <td>@{{doc}}</td>
-					  <td>Salvar</td>
-					</tr>
-
+						<th scope="col">Ana</th>
+						<th scope="col">122.222.211-89</th>
+						<th scope="col"><button type="button" class="btn btn-primary">Salvar</button></th>
 				  </tbody>
 				</table>
 		</div>
@@ -167,7 +125,6 @@
 
 
     </div>
-
 
     <!-- JavaScript (Opcional) -->
     <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
